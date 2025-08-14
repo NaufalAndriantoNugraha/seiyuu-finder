@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DefaultSearchResult from "./default-search-result.vue";
 import { Fa6MagnifyingGlass } from "vue-icons-plus/fa6";
 </script>
 
@@ -13,11 +14,14 @@ import { Fa6MagnifyingGlass } from "vue-icons-plus/fa6";
       />
     </div>
   </section>
+  <section class="seiyuu-cotainer">
+    <DefaultSearchResult></DefaultSearchResult>
+  </section>
 </template>
 
 <style scoped>
 section {
-  padding: 20px 20px;
+  padding: 20px 30px;
 }
 
 .search-container {
