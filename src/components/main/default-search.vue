@@ -4,6 +4,7 @@ import { onMounted, ref } from "vue";
 
 type TopSeiyuu = {
   name: string;
+  img: string;
 };
 
 const topSeiyuuList = ref<Array<TopSeiyuu>>([]);
@@ -14,11 +15,12 @@ async function getTopSeiyuu() {
       "https://api.jikan.moe/v4/top/people?limit=6",
     );
     const seiyuus = await response.data.data;
-    for (let i = 0; i < 6; i++) {
-      const seiyuu: TopSeiyuu = {
-        name: seiyuus[i]["name"],
+    for (let seiyuu of seiyuus) {
+      const newSeiyuu: TopSeiyuu = {
+        name: seiyuu.name,
+        img: seiyuu.images.jpg.image_url,
       };
-      topSeiyuuList.value.push(seiyuu);
+      topSeiyuuList.value.push(newSeiyuu);
     }
     console.log(topSeiyuuList);
   } catch {
@@ -30,32 +32,56 @@ onMounted(() => getTopSeiyuu());
 </script>
 
 <template>
-  <section>
-    <div class="welcome-container">
-      <h1>Welcome, to Seiyū Finder!</h1>
-      <p>
-        Find your favorite seiyū and discover <br />
-        which animes and characters they have voiced.
-      </p>
-    </div>
-    <div class="top-seiyuu-cotainer">
-      <h2>Top 6 Seiyūs right now</h2>
-      <div class="list">
-        <ol>
-          <li v-for="seiyuu in topSeiyuuList">
-            {{ seiyuu["name"] }}
-          </li>
-        </ol>
+  <section class="default-search">
+    <section class="welcome-container">
+      <div class="welcome-message">
+        <h1>Welcome to Seiyū Finder!</h1>
+        <p>
+          Find your favorite seiyū and discover <br />
+          which animes and characters they have voiced.
+        </p>
       </div>
-    </div>
+      <div class="top-seiyuu-cotainer">
+        <h2>Top 6 seiyūs right now</h2>
+        <div class="list">
+          <ol>
+            <li v-for="seiyuu in topSeiyuuList">
+              {{ seiyuu["name"] }}
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    <section class="seiyuu-preview">
+      <img
+        v-for="seiyuu in topSeiyuuList"
+        :src="seiyuu?.img"
+        :alt="seiyuu?.name"
+      />
+    </section>
   </section>
 </template>
 
 <style scoped>
-section {
+.default-search {
+  display: flex;
+  justify-content: space-around;
+}
+
+.seiyuu-preview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+img {
+  width: 120px;
+  height: auto;
+}
+
+.welcome-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 40px;
   gap: 40px;
 }
@@ -70,7 +96,6 @@ h1 {
 p {
   font-family: "Noto Sans JP", sans-serif;
   font-size: 1.15rem;
-  text-align: center;
   letter-spacing: 1px;
   line-height: 1.5;
 }
@@ -79,23 +104,16 @@ p {
   display: flex;
 }
 
-.welcome-container,
-.top-seiyuu-cotainer {
+.welcome-message {
   display: flex;
   flex-direction: column;
 }
 
-.welcome-container {
-  align-items: center;
-  width: 40%;
-}
-
 .top-seiyuu-cotainer {
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
-  border: 1px solid #333;
   border-radius: 4px;
-  padding: 20px 50px;
 }
 
 h2 {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DefaultSearchResult from "./default-search-result.vue";
+import DefaultSearchResult from "./default-search.vue";
 import { Fa6MagnifyingGlass } from "vue-icons-plus/fa6";
 </script>
 
