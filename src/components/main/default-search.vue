@@ -22,7 +22,6 @@ async function getTopSeiyuu() {
       };
       topSeiyuuList.value.push(newSeiyuu);
     }
-    console.log(topSeiyuuList);
   } catch {
     console.error("Can't fetch top seiyuus!");
   }
@@ -34,30 +33,15 @@ onMounted(() => getTopSeiyuu());
 <template>
   <section class="default-search">
     <section class="welcome-container">
-      <div class="welcome-message">
-        <h1>Welcome to Seiyū Finder!</h1>
-        <p>
-          Find your favorite seiyū and discover <br />
-          which animes and characters they have voiced.
-        </p>
-      </div>
-      <div class="top-seiyuu-cotainer">
-        <h2>Top 6 seiyūs right now</h2>
-        <div class="list">
-          <ol>
-            <li v-for="seiyuu in topSeiyuuList">
-              {{ seiyuu["name"] }}
-            </li>
-          </ol>
-        </div>
-      </div>
-    </section>
-    <section class="seiyuu-preview">
-      <img
-        v-for="seiyuu in topSeiyuuList"
-        :src="seiyuu?.img"
-        :alt="seiyuu?.name"
-      />
+      <h1>Welcome to Seiyū Finder!</h1>
+      <p>
+        Find your favorite seiyū and discover <br />
+        which animes and characters they have voiced.
+      </p>
+      <p>
+        Powered by Jikan API. Jikan is an unofficial MyAnimeList API that
+        provides open access to anime, manga, and character information.
+      </p>
     </section>
   </section>
 </template>
@@ -66,12 +50,6 @@ onMounted(() => getTopSeiyuu());
 .default-search {
   display: flex;
   justify-content: space-around;
-}
-
-.seiyuu-preview {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
 }
 
 img {
@@ -83,7 +61,9 @@ img {
   display: flex;
   flex-direction: column;
   margin-top: 40px;
-  gap: 40px;
+  text-align: center;
+  gap: 20px;
+  width: 40%;
 }
 
 h1 {
@@ -102,18 +82,6 @@ p {
 
 .list {
   display: flex;
-}
-
-.welcome-message {
-  display: flex;
-  flex-direction: column;
-}
-
-.top-seiyuu-cotainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  border-radius: 4px;
 }
 
 h2 {
