@@ -58,7 +58,7 @@ figure {
 }
 
 img {
-  width: 130px;
+  width: 140px;
   height: auto;
 }
 
